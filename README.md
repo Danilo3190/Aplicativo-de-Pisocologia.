@@ -1,4 +1,4 @@
-# MenteSana - Gestão de Terapias Psicológicas
+# MenteLivre - Gestão de Terapias Psicológicas
 
 **Trabalho de Graduação (TG)**  
 **Curso:** Análise e Desenvolvimento de Sistemas - FATEC Franca  
@@ -11,7 +11,7 @@
 
 O cenário contemporâneo da saúde mental aponta para um crescimento drástico na busca por suporte psicológico. No modelo tradicional de psicoterapia, a coleta de dados sobre o estado emocional do paciente ocorre de forma retrospectiva e intermitente (apenas nas sessões clínicas). Essa assincronia gera um "vazio de informações" entre as consultas.
 
-O **MenteSana** é uma plataforma SaaS Full-Stack desenvolvida para preencher essa lacuna. Ele conecta psicólogos e pacientes diariamente, permitindo que os pacientes registrem seu humor, qualidade do sono, gatilhos e anotações (diários) de forma assíncrona. O psicólogo, por sua vez, acessa um painel com análise gráfica, um feed recente de atualizações e prontuários eletrônicos, apoiando a tomada de decisão clínica com base em dados reais.
+O **MenteLivre** é uma plataforma SaaS Full-Stack desenvolvida para preencher essa lacuna. Ele conecta psicólogos e pacientes diariamente, permitindo que os pacientes registrem seu humor, qualidade do sono, gatilhos e anotações (diários) de forma assíncrona. O psicólogo, por sua vez, acessa um painel com análise gráfica, um feed recente de atualizações e prontuários eletrônicos, apoiando a tomada de decisão clínica com base em dados reais.
 
 ---
 
