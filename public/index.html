@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Livre - Gestão de Terapias Psicológicas</title>
+
+  <!-- Fontes do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome para Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Chart.js para Gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Elementos de Fundo Decorativos (Blur) -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <main id="app-container">
+
+    <!-- 1. TELA DE APRESENTAÇÃO (LANDING / SELEÇÃO) -->
+    <section id="screen-landing" class="screen active">
+      <div class="glass-card header-card animate-fade-in">
+        <div class="logo">
+          <i class="fa-solid fa-brain logo-icon"></i>
+          <h1>Mente<span>Livre</span></h1>
+        </div>
+        <p class="subtitle">Tecnologias Digitais de Informação e Comunicação para Suporte à Gestão de Terapias
+          Psicológicas</p>
+        <p class="desc">Plataforma SaaS integrada para conexão diária entre psicólogos e pacientes, promovendo saúde
+          mental contínua baseada em dados reais.</p>
+
+        <div class="landing-actions">
+          <button class="btn btn-primary" onclick="showScreen('screen-login-profissional')">
+            <i class="fa-solid fa-user-doctor"></i> Painel do Psicólogo
+          </button>
+          <button class="btn btn-secondary" onclick="showScreen('screen-login-paciente')">
+            <i class="fa-solid fa-hospital-user"></i> Portal do Paciente
+          </button>
+        </div>
+
+        <div class="landing-footer">
+          <span>TG Danilo • Análise e Desenvolvimento de Sistemas • FATEC Franca</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TELA DE LOGIN DO PSICÓLOGO -->
+    <section id="screen-login-profissional" class="screen">
+      <div class="glass-card auth-card animate-slide-up">
+        <button class="btn-back" onclick="showScreen('screen-landing')">
+          <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+
+        <h2>Acesso do Psicólogo</h2>
+        <p class="card-subtitle">Entre para gerenciar seus prontuários e analisar dados de evolução</p>
+
+        <form id="form-login-profissional" onsubmit="handleLoginProfissional(event)">
+          <div class="form-group">
+            <label for="login-prof-email"><i class="fa-solid fa-envelope"></i> E-mail</label>
+            <input type="email" id="login-prof-email" placeholder="seuemail@exemplo.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-prof-senha"><i class="fa-solid fa-lock"></i> Senha</label>
+            <input type="password" id="login-prof-senha" placeholder="Sua senha secreta" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Entrar no Painel</button>
+        </form>
+
+        <div class="auth-footer">
+          Não tem uma conta profissional? <a href="#"
+            onclick="showScreen('screen-register-profissional')">Cadastre-se</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TELA DE REGISTRO DO PSICÓLOGO -->
+    <section id="screen-register-profissional" class="screen">
+      <div class="glass-card auth-card animate-slide-up">
+        <button class="btn-back" onclick="showScreen('screen-login-profissional')">
+          <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+
+        <h2>Criar Conta Profissional</h2>
+        <p class="card-subtitle">Cadastre sua clínica ou consultório individual</p>
+
+        <form id="form-register-profissional" onsubmit="handleRegisterProfissional(event)">
+          <div class="form-group">
+            <label for="reg-prof-nome"><i class="fa-solid fa-user"></i> Nome Completo</label>
+            <input type="text" id="reg-prof-nome" placeholder="Dr(a). Nome Sobrenome" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-prof-email"><i class="fa-solid fa-envelope"></i> E-mail Profissional</label>
+            <input type="email" id="reg-prof-email" placeholder="nome@consultorio.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-prof-crp"><i class="fa-solid fa-id-card"></i> Registro CRP</label>
+            <input type="text" id="reg-prof-crp" placeholder="ex: CRP 06/12345" required>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-prof-senha"><i class="fa-solid fa-lock"></i> Criar Senha</label>
+            <input type="password" id="reg-prof-senha" placeholder="Mínimo 6 caracteres" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Criar Conta</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 4. TELA DE LOGIN DO PACIENTE -->
+    <section id="screen-login-paciente" class="screen">
+      <div class="glass-card auth-card animate-slide-up">
+        <button class="btn-back" onclick="showScreen('screen-landing')">
+          <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+
+        <h2>Portal do Paciente</h2>
+        <p class="card-subtitle">Faça login para registrar seu humor e sono de hoje</p>
+
+        <form id="form-login-paciente" onsubmit="handleLoginPaciente(event)">
+          <div class="form-group">
+            <label for="login-pac-email"><i class="fa-solid fa-envelope"></i> E-mail</label>
+            <input type="email" id="login-pac-email" placeholder="seuemail@provedor.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="login-pac-senha"><i class="fa-solid fa-lock"></i> Senha de Acesso</label>
+            <input type="password" id="login-pac-senha" placeholder="Sua senha temporária ou definitiva" required>
+          </div>
+
+          <button type="submit" class="btn btn-secondary btn-block">Acessar Portal</button>
+        </form>
+
+        <div class="auth-notice">
+          <i class="fa-solid fa-circle-info"></i> Seu cadastro deve ser previamente realizado pelo seu psicólogo
+          clínico.
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TELA DO PAINEL DO PSICÓLOGO (DASHBOARD) -->
+    <section id="screen-dashboard-profissional" class="screen-full">
+
+      <!-- Topbar -->
+      <header class="glass-nav">
+        <div class="logo">
+          <i class="fa-solid fa-brain logo-icon"></i>
+          <h1>Mente<span>Livre</span></h1>
+          <span class="badge">Psicólogo</span>
+        </div>
+        <div class="user-profile">
+          <span id="prof-display-name">Carregando...</span>
+          <button class="btn-logout" onclick="handleLogout()"><i class="fa-solid fa-right-from-bracket"></i>
+            Sair</button>
+        </div>
+      </header>
+
+      <!-- Layout Grid -->
+      <div class="dashboard-grid">
+
+        <!-- Sidebar: Lista de Pacientes -->
+        <aside class="glass-card sidebar">
+          <div class="sidebar-header">
+            <h3><i class="fa-solid fa-users"></i> Pacientes</h3>
+            <button class="btn-icon" onclick="openNewPatientModal()"><i class="fa-solid fa-user-plus"></i></button>
+          </div>
+
+          <div id="patient-list-container" class="patient-list">
+            <!-- Renderizado dinamicamente via JS -->
+            <p class="empty-msg">Nenhum paciente cadastrado.</p>
+          </div>
+        </aside>
+
+        <!-- Main Content: Detalhes e Gráficos -->
+        <main class="main-content">
+          <div id="active-patient-view" class="active-patient-panel" style="display: none;">
+
+            <div class="patient-profile-header glass-card">
+              <div class="profile-avatar">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <div class="profile-details">
+                <h2 id="active-patient-name">Nome do Paciente</h2>
+                <p id="active-patient-email">email@paciente.com</p>
+              </div>
+              <div class="profile-settings" style="display: flex; gap: 10px; align-items: center;">
+                <span class="notification-badge"><i class="fa-solid fa-clock"></i> Notificação: <strong
+                    id="active-patient-time">20:00</strong></span>
+                <button class="btn-icon" style="width: 32px; height: 32px;" title="Editar Paciente"
+                  onclick="openEditPatientModal()"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon" style="width: 32px; height: 32px; color: var(--color-danger);"
+                  title="Excluir Paciente" onclick="handleDeletePaciente()"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            </div>
+
+            <!-- Abas de Navegação -->
+            <div class="tab-bar glass-card">
+              <button class="tab-btn active" onclick="switchTab('tab-evolucao')"><i class="fa-solid fa-chart-line"></i>
+                Evolução Clínica</button>
+              <button class="tab-btn" onclick="switchTab('tab-diario')"><i class="fa-solid fa-comment-medical"></i>
+                Relatos do Paciente</button>
+              <button class="tab-btn" onclick="switchTab('tab-prontuarios')"><i class="fa-solid fa-folder-open"></i>
+                Prontuário Eletrônico</button>
+            </div>
+
+            <!-- TAB 1: Evolução Clínica (Gráficos e Indicadores) -->
+            <div id="tab-evolucao" class="tab-content active">
+              <div class="metrics-row">
+                <div class="glass-card metric-card">
+                  <div class="metric-icon color-primary"><i class="fa-solid fa-face-smile"></i></div>
+                  <div class="metric-info">
+                    <h4>Média de Humor</h4>
+                    <h2 id="metric-avg-mood">-</h2>
+                  </div>
+                </div>
+                <div class="glass-card metric-card">
+                  <div class="metric-icon color-secondary"><i class="fa-solid fa-moon"></i></div>
+                  <div class="metric-info">
+                    <h4>Qualidade do Sono</h4>
+                    <h2 id="metric-avg-sleep">-</h2>
+                  </div>
+                </div>
+                <div class="glass-card metric-card">
+                  <div class="metric-icon color-warning"><i class="fa-solid fa-calendar-check"></i></div>
+                  <div class="metric-info">
+                    <h4>Total de Registros</h4>
+                    <h2 id="metric-total-records">-</h2>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gráfico de Linha Integrado -->
+              <div class="glass-card chart-card">
+                <h3>Histórico de Evolução Temporal (Humor e Sono)</h3>
+                <div class="chart-wrapper">
+                  <canvas id="chart-evolucao-clinica"></canvas>
+                </div>
+              </div>
+
+              <!-- Tags e Gatilhos -->
+              <div class="double-column">
+                <div class="glass-card detail-box">
+                  <h3>Sentimentos Mais Frequentes</h3>
+                  <div id="sentimentos-cloud" class="tag-cloud">
+                    <!-- Dinâmico -->
+                  </div>
+                </div>
+                <div class="glass-card detail-box">
+                  <h3>Gatilhos Identificados</h3>
+                  <div id="gatilhos-cloud" class="tag-cloud tags-warning">
+                    <!-- Dinâmico -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- TAB 1.5: Relatos do Paciente -->
+            <div id="tab-diario" class="tab-content">
+              <div class="glass-card detail-box">
+                <h3><i class="fa-solid fa-note-sticky"></i> Diário de Autorregistros do Paciente</h3>
+                <p class="card-subtitle" style="margin-bottom: 15px;">Abaixo estão listados os registros e comentários
+                  diários inseridos pelo paciente de forma assíncrona</p>
+                <div id="patient-daily-logs-container" class="prontuarios-timeline" style="max-height: 500px;">
+                  <!-- Renderizado dinamicamente via JS -->
+                  <p class="empty-msg">Nenhum registro diário feito por este paciente.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: Prontuário Clínico -->
+            <div id="tab-prontuarios" class="tab-content">
+              <div class="glass-card prontuario-input-box">
+                <h3><i class="fa-solid fa-pen-nib"></i> Registrar Nova Sessão Clínica</h3>
+                <form id="form-prontuario" onsubmit="handleSaveProntuario(event)">
+                  <textarea id="prontuario-texto" rows="4"
+                    placeholder="Escreva aqui suas observações clínicas, evolução, metas da sessão de forma segura..."
+                    required></textarea>
+                  <div class="prontuario-actions">
+                    <span><i class="fa-solid fa-shield-halved"></i> Os dados do prontuário são isolados logicamente na
+                      nuvem</span>
+                    <button type="submit" class="btn btn-primary">Salvar Registro Clínico</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="glass-card prontuarios-list-card">
+                <h3>Histórico Clínico do Prontuário</h3>
+                <div id="prontuarios-history-container" class="prontuarios-timeline">
+                  <!-- Dinâmico -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div id="no-patient-selected-view" class="glass-card"
+            style="display: flex; flex-direction: column; height: 100%;">
+            <div
+              style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px;">
+              <h2 style="font-family: var(--font-title); font-size: 1.4rem;"><i
+                  class="fa-solid fa-bell text-warning"></i> Status Recentes dos Pacientes</h2>
+              <p class="card-subtitle" style="margin-bottom: 0;">Acompanhe os últimos registros da sua clínica</p>
+            </div>
+
+            <div id="professional-feed-container" class="prontuarios-timeline"
+              style="flex: 1; max-height: calc(100vh - 250px);">
+              <!-- Renderizado dinamicamente via JS -->
+              <p class="empty-msg">Carregando feed de pacientes...</p>
+            </div>
+          </div>
+        </main>
+      </div>
+
+    </section>
+
+    <!-- 6. TELA DO PAINEL DO PACIENTE (DIÁRIO E HISTÓRICO) -->
+    <section id="screen-dashboard-paciente" class="screen-full">
+      <!-- Topbar Paciente -->
+      <header class="glass-nav glass-nav-patient">
+        <div class="logo">
+          <i class="fa-solid fa-brain logo-icon text-secondary"></i>
+          <h1>Mente<span>Livre</span></h1>
+          <span class="badge badge-secondary">Paciente</span>
+        </div>
+        <div class="user-profile">
+          <span id="pac-display-name">Carregando...</span>
+          <button class="btn-logout btn-logout-patient" onclick="handleLogout()"><i
+              class="fa-solid fa-right-from-bracket"></i> Sair</button>
+        </div>
+      </header>
+
+      <div class="dashboard-grid grid-patient">
+        <!-- Coluna Esquerda: Formulário de Check-in Diário -->
+        <main class="main-content content-patient">
+          <div class="glass-card checkin-card animate-fade-in">
+            <h2>Como está o seu dia hoje?</h2>
+            <p class="subtitle">Preencha o seu autorregistro diário assíncrono para apoiar o seu processo terapêutico.
+            </p>
+
+            <form id="form-registro-diario" onsubmit="handleSaveRegistroDiario(event)">
+
+              <!-- Nível de Humor com Rostos Interativos -->
+              <div class="form-group-custom">
+                <label>Como você avalia seu humor agora?</label>
+                <div class="mood-selector">
+                  <div class="mood-option" data-value="1">
+                    <span class="mood-face">😫</span>
+                    <span class="mood-label">Muito Ruim</span>
+                  </div>
+                  <div class="mood-option" data-value="2">
+                    <span class="mood-face">😟</span>
+                    <span class="mood-label">Ruim</span>
+                  </div>
+                  <div class="mood-option" data-value="3">
+                    <span class="mood-face">😐</span>
+                    <span class="mood-label">Neutro</span>
+                  </div>
+                  <div class="mood-option" data-value="4">
+                    <span class="mood-face">🙂</span>
+                    <span class="mood-label">Bom</span>
+                  </div>
+                  <div class="mood-option" data-value="5">
+                    <span class="mood-face">😄</span>
+                    <span class="mood-label">Excelente</span>
+                  </div>
+                </div>
+                <input type="hidden" id="registro-humor" required>
+              </div>
+
+              <!-- Qualidade do Sono -->
+              <div class="form-group">
+                <label for="registro-sono"><i class="fa-solid fa-bed"></i> Qualidade do Sono na última noite: <strong
+                    id="sono-val-display">3/5</strong></label>
+                <div class="slider-wrapper">
+                  <input type="range" id="registro-sono" min="1" max="5" value="3"
+                    oninput="document.getElementById('sono-val-display').innerText = this.value + '/5'">
+                  <div class="slider-labels">
+                    <span>Péssimo</span>
+                    <span>Neutro</span>
+                    <span>Excelente</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sentimentos (Chips Interativos) -->
+              <div class="form-group">
+                <label>Que sentimentos definem o seu dia?</label>
+                <div class="chip-container" id="sentimentos-chips">
+                  <div class="chip" data-type="sentimento">Feliz</div>
+                  <div class="chip" data-type="sentimento">Ansioso</div>
+                  <div class="chip" data-type="sentimento">Triste</div>
+                  <div class="chip" data-type="sentimento">Calmo</div>
+                  <div class="chip" data-type="sentimento">Estressado</div>
+                  <div class="chip" data-type="sentimento">Cansado</div>
+                  <div class="chip" data-type="sentimento">Irritado</div>
+                  <div class="chip" data-type="sentimento">Animado</div>
+                </div>
+              </div>
+
+              <!-- Gatilhos (Chips Interativos) -->
+              <div class="form-group">
+                <label>Quais fatores/gatilhos influenciaram seu estado hoje?</label>
+                <div class="chip-container chip-container-warning" id="gatilhos-chips">
+                  <div class="chip" data-type="gatilho">Trabalho</div>
+                  <div class="chip" data-type="gatilho">Família</div>
+                  <div class="chip" data-type="gatilho">Saúde</div>
+                  <div class="chip" data-type="gatilho">Relacionamento</div>
+                  <div class="chip" data-type="gatilho">Finanças</div>
+                  <div class="chip" data-type="gatilho">Estudos</div>
+                  <div class="chip" data-type="gatilho">Redes Sociais</div>
+                  <div class="chip" data-type="gatilho">Insônia</div>
+                </div>
+              </div>
+
+              <!-- Anotações Livres -->
+              <div class="form-group">
+                <label for="registro-anotacoes"><i class="fa-solid fa-pen"></i> Anotações ou Notas de Gatilho
+                  (Opcional)</label>
+                <textarea id="registro-anotacoes" rows="3"
+                  placeholder="Sinta-se à vontade para detalhar eventos do seu dia que deseja discutir na próxima consulta..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-secondary btn-block">Enviar Registro Diário</button>
+            </form>
+          </div>
+        </main>
+
+        <!-- Coluna Direita: Histórico de Registros do Paciente -->
+        <aside class="glass-card sidebar-patient">
+          <div class="sidebar-header">
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Meu Histórico</h3>
+          </div>
+          <div id="patient-history-container" class="patient-history-list">
+            <!-- Dinâmico -->
+            <p class="empty-msg">Nenhum registro diário feito.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: CADASTRAR PACIENTE (APENAS PSICÓLOGO) -->
+  <div id="modal-new-patient" class="modal-overlay">
+    <div class="glass-card modal-content animate-zoom-in">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-plus"></i> Vincular Novo Paciente</h3>
+        <button class="btn-close" onclick="closeNewPatientModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="form-new-patient" onsubmit="handleRegisterPaciente(event)">
+        <div class="form-group">
+          <label for="new-pac-nome"><i class="fa-solid fa-user"></i> Nome do Paciente</label>
+          <input type="text" id="new-pac-nome" placeholder="Nome Completo do Paciente" required>
+        </div>
+
+        <div class="form-group">
+          <label for="new-pac-email"><i class="fa-solid fa-envelope"></i> E-mail de Acesso</label>
+          <input type="email" id="new-pac-email" placeholder="paciente@provedor.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="new-pac-senha"><i class="fa-solid fa-lock"></i> Criar Senha Temporária</label>
+          <input type="password" id="new-pac-senha" placeholder="Mínimo 6 caracteres" required>
+        </div>
+
+        <div class="form-group">
+          <label for="new-pac-horario"><i class="fa-solid fa-clock"></i> Horário das Notificações Diárias</label>
+          <input type="time" id="new-pac-horario" value="20:00" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Confirmar Vínculo Clínico</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDITAR PACIENTE -->
+  <div id="modal-edit-patient" class="modal-overlay">
+    <div class="glass-card modal-content animate-zoom-in">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-pen"></i> Editar Paciente</h3>
+        <button class="btn-close" onclick="closeEditPatientModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="form-edit-patient" onsubmit="handleEditPaciente(event)">
+        <div class="form-group">
+          <label for="edit-pac-nome"><i class="fa-solid fa-user"></i> Nome do Paciente</label>
+          <input type="text" id="edit-pac-nome" placeholder="Nome Completo do Paciente" required>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-pac-email"><i class="fa-solid fa-envelope"></i> E-mail de Acesso</label>
+          <input type="email" id="edit-pac-email" placeholder="paciente@provedor.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-pac-horario"><i class="fa-solid fa-clock"></i> Horário das Notificações Diárias</label>
+          <input type="time" id="edit-pac-horario" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Salvar Alterações</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- NOTIFICAÇÃO TOAST CUSTOMIZADA (GLASSMORPHISM) -->
+  <div id="toast" class="toast">
+    <i id="toast-icon" class="fa-solid fa-circle-check"></i>
+    <span id="toast-msg">Mensagem padrão do sistema</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
